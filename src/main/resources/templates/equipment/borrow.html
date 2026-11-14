@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>EquipIT - Borrow</title>
+</head>
+<body>
+<h1>Borrow Equipment</h1>
+<div th:if="${equipment}">
+    <p th:text="|${equipment.name} - ${equipment.category}|"></p>
+    <p th:if="${equipment.available}">Status: available</p>
+    <p th:unless="${equipment.available}">Status: already borrowed</p>
+    <form th:action="@{/api/equipment/{id}/borrow(id=${equipment.id})}" method="post">
+        <label>First name: <input type="text" name="firstName"/></label><br/>
+        <label>Last name: <input type="text" name="lastName"/></label><br/>
+        <button type="submit">Borrow</button>
+    </form>
+</div>
+<a th:href="@{/equipment}">Back to list</a>
+</body>
+</html>
