@@ -1,5 +1,6 @@
 package com.equipit.equipment;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,26 @@ public class EquipmentService {
     }
 
     public Equipment borrowEquipment(Long id, String firstName, String lastName) {
-        throw new UnsupportedOperationException("Exercise 1: implement equipment borrowing");
+        Equipment equipment = findById(id);
+        if (!equipment.isAvailable()) {
+            throw new IllegalStateException("Equipment already borrowed: " + id);
+        }
+        equipment.setAvailable(false);
+        equipment.setBorrowerFirstName(firstName);
+        equipment.setBorrowerLastName(lastName);
+        equipment.setBorrowedAt(LocalDate.now());
+        return repository.save(equipment);
     }
 
     public Equipment returnEquipment(Long id) {
-        throw new UnsupportedOperationException("Exercise 1: implement equipment return");
+        Equipment equipment = findById(id);
+        if (equipment.isAvailable()) {
+            throw new IllegalStateException("Equipment not borrowed: " + id);
+        }
+        equipment.setAvailable(true);
+        equipment.setLastReturnedAt(LocalDate.now());
+        equipment.setBorrowerFirstName(null);
+        equipment.setBorrowerLastName(null);
+        return repository.save(equipment);
     }
 }
