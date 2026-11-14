@@ -30,8 +30,11 @@ public class Equipment {
     public String getName() { return name; }
     public String getCategory() { return category; }
     public boolean isAvailable() { return available; }
+    public void setAvailable(boolean available) { this.available = available; }
     public String getBorrowerFirstName() { return borrowerFirstName; }
+    public void setBorrowerFirstName(String borrowerFirstName) { this.borrowerFirstName = borrowerFirstName; }
     public String getBorrowerLastName() { return borrowerLastName; }
+    public void setBorrowerLastName(String borrowerLastName) { this.borrowerLastName = borrowerLastName; }
     public LocalDate getBorrowedAt() { return borrowedAt; }
     public LocalDate getLastReturnedAt() { return lastReturnedAt; }
 }
