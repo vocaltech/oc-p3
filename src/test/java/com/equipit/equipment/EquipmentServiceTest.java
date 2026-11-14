@@ -57,16 +57,31 @@ class EquipmentServiceTest {
     }
 
     @Test
-    void givenAnyEquipment_whenBorrowEquipment_thenThrowUnsupportedOperation() {
-        assertThatThrownBy(() -> service.borrowEquipment(1L, "Jean", "Dupont"))
-                .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("Exercise 1: implement equipment borrowing");
+    void givenAvailableEquipment_whenBorrowEquipment_thenMarkAsBorrowed() {
+        Equipment laptop = new Equipment("Ordinateur portable", "Informatique");
+        when(repository.findById(1L)).thenReturn(Optional.of(laptop));
+
+        Equipment result = service.borrowEquipment(1L, "Jean", "Dupont");
+
+        assertThat(result.isAvailable()).isFalse();
+        assertThat(result.getBorrowerFirstName()).isEqualTo("Jean");
+        assertThat(result.getBorrowerLastName()).isEqualTo("Dupont");
+        verify(repository).findById(1L);
     }
 
     @Test
-    void givenAnyEquipment_whenReturnEquipment_thenThrowUnsupportedOperation() {
-        assertThatThrownBy(() -> service.returnEquipment(1L))
-                .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("Exercise 1: implement equipment return");
+    void givenBorrowedEquipment_whenReturnEquipment_thenMarkAsAvailable() {
+        Equipment laptop = new Equipment("Ordinateur portable", "Informatique");
+        laptop.setAvailable(false);
+        laptop.setBorrowerFirstName("Jean");
+        laptop.setBorrowerLastName("Dupont");
+        when(repository.findById(1L)).thenReturn(Optional.of(laptop));
+
+        Equipment result = service.returnEquipment(1L);
+
+        assertThat(result.isAvailable()).isTrue();
+        assertThat(result.getBorrowerFirstName()).isNull();
+        assertThat(result.getBorrowerLastName()).isNull();
+        verify(repository).findById(1L);
     }
 }
