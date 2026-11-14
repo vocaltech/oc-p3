@@ -60,6 +60,7 @@ class EquipmentServiceTest {
     void givenAvailableEquipment_whenBorrowEquipment_thenMarkAsBorrowed() {
         Equipment laptop = new Equipment("Ordinateur portable", "Informatique");
         when(repository.findById(1L)).thenReturn(Optional.of(laptop));
+        when(repository.save(laptop)).thenReturn(laptop);
 
         Equipment result = service.borrowEquipment(1L, "Jean", "Dupont");
 
@@ -67,6 +68,7 @@ class EquipmentServiceTest {
         assertThat(result.getBorrowerFirstName()).isEqualTo("Jean");
         assertThat(result.getBorrowerLastName()).isEqualTo("Dupont");
         verify(repository).findById(1L);
+        verify(repository).save(laptop);
     }
 
     @Test
@@ -76,6 +78,7 @@ class EquipmentServiceTest {
         laptop.setBorrowerFirstName("Jean");
         laptop.setBorrowerLastName("Dupont");
         when(repository.findById(1L)).thenReturn(Optional.of(laptop));
+        when(repository.save(laptop)).thenReturn(laptop);
 
         Equipment result = service.returnEquipment(1L);
 
@@ -83,5 +86,6 @@ class EquipmentServiceTest {
         assertThat(result.getBorrowerFirstName()).isNull();
         assertThat(result.getBorrowerLastName()).isNull();
         verify(repository).findById(1L);
+        verify(repository).save(laptop);
     }
 }
