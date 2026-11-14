@@ -15,6 +15,10 @@ public class EquipmentService {
         return repository.findAll();
     }
 
+    public Equipment findById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Unknown equipment: " + id));
+    }
+
     public Equipment borrowEquipment(Long id, String firstName, String lastName) {
         throw new UnsupportedOperationException("Exercise 1: implement equipment borrowing");
     }
