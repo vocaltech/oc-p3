@@ -36,5 +36,7 @@ public class Equipment {
     public String getBorrowerLastName() { return borrowerLastName; }
     public void setBorrowerLastName(String borrowerLastName) { this.borrowerLastName = borrowerLastName; }
     public LocalDate getBorrowedAt() { return borrowedAt; }
+    public void setBorrowedAt(LocalDate borrowedAt) { this.borrowedAt = borrowedAt; }
     public LocalDate getLastReturnedAt() { return lastReturnedAt; }
+    public void setLastReturnedAt(LocalDate lastReturnedAt) { this.lastReturnedAt = lastReturnedAt; }
 }
