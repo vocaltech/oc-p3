@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/preview/equipment")
 public class EquipmentPreviewController {
-
+    private static final String EQUIPMENT = "equipment";
     private final EquipmentService service;
 
     public EquipmentPreviewController(EquipmentService service) {
@@ -19,13 +19,19 @@ public class EquipmentPreviewController {
     @GetMapping("")
     public String list(Model model) {
         model.addAttribute("title", "Liste du matériel");
-        model.addAttribute("equipment", service.findAll());
+        model.addAttribute(EQUIPMENT, service.findAll());
         return "equipment/list";
     }
 
     @GetMapping("/borrow/{id}")
     public String borrowForm(@PathVariable Long id, Model model) {
-        model.addAttribute("equipment", service.findById(id));
+        model.addAttribute(EQUIPMENT, service.findById(id));
         return "equipment/borrow";
+    }
+
+    @GetMapping("/return/{id}")
+    public String returnForm(@PathVariable Long id, Model model) {
+        model.addAttribute(EQUIPMENT, service.findById(id));
+        return "equipment/return";
     }
 }
