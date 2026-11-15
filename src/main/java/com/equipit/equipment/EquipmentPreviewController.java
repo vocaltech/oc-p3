@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/preview")
+@RequestMapping("/preview/equipment")
 public class EquipmentPreviewController {
 
     private final EquipmentService service;
@@ -16,14 +16,14 @@ public class EquipmentPreviewController {
         this.service = service;
     }
 
-    @GetMapping("/equipment")
+    @GetMapping("")
     public String list(Model model) {
         model.addAttribute("title", "Liste du matériel");
         model.addAttribute("equipment", service.findAll());
         return "equipment/list";
     }
 
-    @GetMapping("/equipment/borrow/{id}")
+    @GetMapping("/borrow/{id}")
     public String borrowForm(@PathVariable Long id, Model model) {
         model.addAttribute("equipment", service.findById(id));
         return "equipment/borrow";
