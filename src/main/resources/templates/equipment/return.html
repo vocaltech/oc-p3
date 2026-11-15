@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8"/>
+    <title>EquipIT - Retour</title>
+</head>
+<body>
+<h1>Retour du matériel</h1>
+<div th:if="${equipment}">
+    <p th:text="|${equipment.name} - ${equipment.category}|"></p>
+    <p th:if="${!equipment.available}">Status: emprunté par ${equipment.borrowerFirstName} ${equipment.borrowerLastName}</p>
+    <p th:if="${equipment.available}">Status: déjà disponible</p>
+    <form th:action="@{/api/equipment/{id}/return(id=${equipment.id})}" method="post">
+        <button type="submit">Confirmer le retour</button>
+    </form>
+</div>
+<a th:href="@{/preview/equipment}">Retour à la liste</a>
+</body>
+</html>
