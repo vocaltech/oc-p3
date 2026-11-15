@@ -23,7 +23,8 @@
         <td th:text="${e.category}"></td>
         <td th:text="${e.available ? 'Yes' : 'No'}"></td>
         <td>
-            <a th:href="@{/equipment/borrow/{id}(id=${e.id})}">Borrow</a>
+            <a th:href="@{/preview/equipment/borrow/{id}(id=${e.id})}" th:if="${e.available}">Borrow</a>
+            <a th:href="@{/preview/equipment/return/{id}(id=${e.id})}" th:if="${!e.available}">Return</a>
         </td>
     </tr>
     </tbody>
