@@ -88,4 +88,42 @@ class EquipmentServiceTest {
         verify(repository).findById(1L);
         verify(repository).save(laptop);
     }
+
+    /**
+     * Test Logique Métier
+     * Refuser d'emprunter un matériel déjà emprunté
+     */
+    @Test
+    void givenBorrowedEquipment_whenBorrow_thenThrowsException() {
+        // Given (Arrange)
+        Equipment borrowedEquipment = new Equipment("Ordinateur portable", "Informatique");
+        borrowedEquipment.setAvailable(false);
+        when(repository.findById(1L)).thenReturn(Optional.of(borrowedEquipment));
+
+        // When (Act)
+
+        // Then (Assert)
+        assertThatThrownBy(() -> service.borrowEquipment(1L, "Jean", "Dupont"))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Equipment already borrowed: 1");
+    }
+
+    /**
+     * Test Logique Métier
+     * Refuser de retourner un matériel déjà disponible
+     */
+    @Test
+    void givenAvailableEquipment_whenReturn_thenThrowsException() {
+        // Given (Arrange)
+        Equipment returnedEquipment = new Equipment("Ordinateur portable", "Informatique");
+        returnedEquipment.setAvailable(true);
+        when(repository.findById(1L)).thenReturn(Optional.of(returnedEquipment));
+
+        // When (Act)
+
+        // Then (Assert)
+        assertThatThrownBy(() -> service.returnEquipment(1L))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("Equipment not borrowed: 1");
+    }
 }
