@@ -8,7 +8,7 @@
 <h1>Retour du matériel</h1>
 <div th:if="${equipment}">
     <p th:text="|${equipment.name} - ${equipment.category}|"></p>
-    <p th:if="${!equipment.available}">Status: emprunté par ${equipment.borrowerFirstName} ${equipment.borrowerLastName}</p>
+    <p th:if="${!equipment.available}" th:text="|Status: emprunté par ${equipment.borrowerFirstName} ${equipment.borrowerLastName}|"></p>
     <p th:if="${equipment.available}">Status: déjà disponible</p>
     <form th:action="@{/preview/equipment/return/{id}(id=${equipment.id})}" method="post">
         <button type="submit">Confirmer le retour</button>
