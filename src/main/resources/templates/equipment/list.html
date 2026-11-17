@@ -2,32 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
     <meta charset="UTF-8"/>
-    <title>EquipIT - Equipment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>EquipIT - Matériel</title>
+    <link rel="stylesheet" th:href="@{/css/list.css}"/>
 </head>
 <body>
-<h1 th:text="${title}">Equipment</h1>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Available</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="e : ${equipment}">
-        <td th:text="${e.id}"></td>
-        <td th:text="${e.name}"></td>
-        <td th:text="${e.category}"></td>
-        <td th:text="${e.available ? 'Yes' : 'No'}"></td>
-        <td>
-            <a th:href="@{/preview/equipment/borrow/{id}(id=${e.id})}" th:if="${e.available}">Borrow</a>
-            <a th:href="@{/preview/equipment/return/{id}(id=${e.id})}" th:if="${!e.available}">Return</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<main class="list-page">
+    <div class="card">
+        <div class="header">
+            <h1 th:text="${title}">Matériel</h1>
+        </div>
+        <div th:if="${#lists.isEmpty(equipment)}" class="empty-state">
+            <p>Aucun matériel enregistré.</p>
+        </div>
+        <table th:if="${!#lists.isEmpty(equipment)}">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Catégorie</th>
+                <th>Disponibilité</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="e : ${equipment}">
+                <td th:text="${e.id}"></td>
+                <td th:text="${e.name}"></td>
+                <td th:text="${e.category}"></td>
+                <td>
+                    <span th:class="${e.available} ? 'available-badge' : 'borrowed-badge'"
+                          th:text="${e.available} ? 'Disponible' : 'Emprunté'">
+                        <span class="dot" style="display:none;"></span> Disponible
+                    </span>
+                </td>
+                <td class="actions-cell">
+                    <a th:href="@{/preview/equipment/borrow/{id}(id=${e.id})}"
+                       th:if="${e.available}"
+                       class="btn btn-primary btn-sm">Emprunter</a>
+                    <a th:href="@{/preview/equipment/return/{id}(id=${e.id})}"
+                       th:if="${!e.available}"
+                       class="btn btn-outline btn-sm">Retourner</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
 </body>
 </html>

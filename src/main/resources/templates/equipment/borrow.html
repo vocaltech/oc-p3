@@ -1,21 +1,47 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
     <meta charset="UTF-8"/>
-    <title>EquipIT - Borrow</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>EquipIT - Emprunt</title>
+    <link rel="stylesheet" th:href="@{/css/borrow.css}"/>
 </head>
 <body>
-<h1>Borrow Equipment</h1>
-<div th:if="${equipment}">
-    <p th:text="|${equipment.name} - ${equipment.category}|"></p>
-    <p th:if="${equipment.available}">Status: available</p>
-    <p th:unless="${equipment.available}">Status: already borrowed</p>
-    <form th:action="@{/preview/equipment/borrow/{id}(id=${equipment.id})}" method="post" th:object="${borrowRequest}">
-        <label>First name: <input type="text" name="firstName" th:field="*{firstName}"/></label><br/>
-        <label>Last name: <input type="text" name="lastName" th:field="*{lastName}"/></label><br/>
-        <button type="submit">Borrow</button>
-    </form>
-</div>
-<a th:href="@{/preview/equipment}">Back to list</a>
+<main class="borrow-page">
+    <div class="card">
+        <div class="header">
+            <h1>Emprunter du matériel</h1>
+        </div>
+        <div th:if="${equipment}" class="equipment-card">
+            <span class="name" th:text="${equipment.name}">Nom du matériel</span>
+            <span class="category" th:text="${equipment.category}">Catégorie</span>
+            <div class="status"
+                  th:class="${equipment.available} ? 'status available' : 'status borrowed'"
+                  th:text="${equipment.available} ? 'Disponible' : 'Déjà emprunté'">
+                <span class="dot"></span> Disponible
+            </div>
+        </div>
+        <div th:unless="${equipment}" class="alert alert-error">
+            Matériel introuvable.
+        </div>
+        <form th:if="${equipment}"
+              th:action="@{/preview/equipment/borrow/{id}(id=${equipment.id})}"
+              method="post"
+              th:object="${borrowRequest}">
+            <div class="form-group">
+                <label for="firstName">Prénom</label>
+                <input id="firstName" type="text" name="firstName" th:field="*{firstName}" required/>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Nom</label>
+                <input id="lastName" type="text" name="lastName" th:field="*{lastName}" required/>
+            </div>
+            <div class="actions">
+                <a th:href="@{/preview/equipment}" class="btn btn-outline">Annuler</a>
+                <button type="submit" class="btn btn-primary">Emprunter</button>
+            </div>
+        </form>
+    </div>
+</main>
 </body>
 </html>

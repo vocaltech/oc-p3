@@ -2,18 +2,37 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>EquipIT - Retour</title>
+    <link rel="stylesheet" th:href="@{/css/return.css}"/>
 </head>
 <body>
-<h1>Retour du matériel</h1>
-<div th:if="${equipment}">
-    <p th:text="|${equipment.name} - ${equipment.category}|"></p>
-    <p th:if="${!equipment.available}" th:text="|Status: emprunté par ${equipment.borrowerFirstName} ${equipment.borrowerLastName}|"></p>
-    <p th:if="${equipment.available}">Status: déjà disponible</p>
-    <form th:action="@{/preview/equipment/return/{id}(id=${equipment.id})}" method="post">
-        <button type="submit">Confirmer le retour</button>
-    </form>
-</div>
-<a th:href="@{/preview/equipment}">Retour à la liste</a>
+<main class="return-page">
+    <div class="card">
+        <div class="header">
+            <h1>Retour du matériel</h1>
+        </div>
+        <div th:if="${equipment}" class="equipment-card">
+            <span class="name" th:text="${equipment.name}">Nom du matériel</span>
+            <span class="category" th:text="${equipment.category}">Catégorie</span>
+            <div class="status"
+                  th:class="${!equipment.available} ? 'status borrowed' : 'status available'"
+                  th:text="${!equipment.available} ? |Emprunté par ${equipment.borrowerFirstName} ${equipment.borrowerLastName}| : 'Déjà disponible'">
+                <span class="dot"></span> Emprunté par ...
+            </div>
+        </div>
+        <div th:unless="${equipment}" class="alert alert-error">
+            Matériel introuvable.
+        </div>
+        <form th:if="${equipment}"
+              th:action="@{/preview/equipment/return/{id}(id=${equipment.id})}"
+              method="post">
+            <div class="actions">
+                <a th:href="@{/preview/equipment}" class="btn btn-outline">Annuler</a>
+                <button type="submit" class="btn btn-primary">Confirmer le retour</button>
+            </div>
+        </form>
+    </div>
+</main>
 </body>
 </html>
