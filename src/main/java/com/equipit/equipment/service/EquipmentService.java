@@ -1,4 +1,4 @@
-package com.equipit.service;
+package com.equipit.equipment.service;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,6 +23,13 @@ public class EquipmentService {
         return repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Unknown equipment: " + id));
     }
 
+    /**
+     * Logique Métier: Emprunter un équipement
+     * @param id - The equipment ID
+     * @param firstName - The borrower first name
+     * @param lastName - The borrower last name
+     * @return
+     */
     public Equipment borrowEquipment(Long id, String firstName, String lastName) {
         Equipment equipment = findById(id);
         if (!equipment.isAvailable()) {
@@ -35,6 +42,11 @@ public class EquipmentService {
         return repository.save(equipment);
     }
 
+    /**
+     * Return an equipment
+     * @param id - The equipment ID
+     * @return
+     */
     public Equipment returnEquipment(Long id) {
         Equipment equipment = findById(id);
         if (equipment.isAvailable()) {
