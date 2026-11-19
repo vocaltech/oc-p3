@@ -1,5 +1,6 @@
 package com.equipit.equipment.service;
 
+import com.equipit.equipment.exception.EquipmentStateException;
 import com.equipit.equipment.model.Equipment;
 import com.equipit.equipment.repository.EquipmentRepository;
 import org.junit.jupiter.api.Test;
@@ -106,7 +107,7 @@ class EquipmentServiceTest {
 
         // Then (Assert)
         assertThatThrownBy(() -> service.borrowEquipment(1L, "Jean", "Dupont"))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(EquipmentStateException.class)
                 .hasMessage("Equipment already borrowed: 1");
     }
 
@@ -125,7 +126,7 @@ class EquipmentServiceTest {
 
         // Then (Assert)
         assertThatThrownBy(() -> service.returnEquipment(1L))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(EquipmentStateException.class)
                 .hasMessage("Equipment not borrowed: 1");
     }
 }
