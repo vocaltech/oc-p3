@@ -3,6 +3,7 @@ package com.equipit.equipment.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.equipit.equipment.exception.EquipmentStateException;
 import com.equipit.equipment.model.Equipment;
 import com.equipit.equipment.repository.EquipmentRepository;
 import org.springframework.stereotype.Service;
@@ -24,16 +25,18 @@ public class EquipmentService {
     }
 
     /**
-     * Logique Métier: Emprunter un équipement
-     * @param id - The equipment ID
-     * @param firstName - The borrower first name
-     * @param lastName - The borrower last name
-     * @return
+     * Business Rule: Borrow an equipment
+     *
+     * @param id          The equipment ID
+     * @param firstName   The borrower first name
+     * @param lastName    The borrower last name
+     * @return            The borrowed equipment
+     * @throws EquipmentStateException if the equipment is unknown or already borrowed
      */
     public Equipment borrowEquipment(Long id, String firstName, String lastName) {
         Equipment equipment = findById(id);
         if (!equipment.isAvailable()) {
-            throw new IllegalStateException("Equipment already borrowed: " + id);
+            throw new EquipmentStateException("Equipment already borrowed: " + id);
         }
         equipment.setAvailable(false);
         equipment.setBorrowerFirstName(firstName);
@@ -43,14 +46,16 @@ public class EquipmentService {
     }
 
     /**
-     * Return an equipment
-     * @param id - The equipment ID
-     * @return
+     * Business Rule: Return an equipment
+     *
+     * @param id The equipment ID
+     * @return The returned equipment
+     * @throws EquipmentStateException if the equipment is unknown or not currently borrowed
      */
     public Equipment returnEquipment(Long id) {
         Equipment equipment = findById(id);
         if (equipment.isAvailable()) {
-            throw new IllegalStateException("Equipment not borrowed: " + id);
+            throw new EquipmentStateException("Equipment not borrowed: " + id);
         }
         equipment.setAvailable(true);
         equipment.setLastReturnedAt(LocalDate.now());
