@@ -1,7 +1,7 @@
 package com.equipit;
 
-import com.equipit.equipment.Equipment;
-import com.equipit.equipment.EquipmentRepository;
+import com.equipit.equipment.model.Equipment;
+import com.equipit.equipment.repository.EquipmentRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

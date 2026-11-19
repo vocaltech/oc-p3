@@ -1,5 +1,7 @@
-package com.equipit.equipment;
+package com.equipit.equipment.controller;
 
+import com.equipit.service.EquipmentService;
+import com.equipit.equipment.dto.BorrowRequest;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

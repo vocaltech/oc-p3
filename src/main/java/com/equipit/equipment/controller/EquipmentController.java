@@ -1,5 +1,8 @@
-package com.equipit.equipment;
+package com.equipit.equipment.controller;
 
+import com.equipit.service.EquipmentService;
+import com.equipit.equipment.dto.BorrowRequest;
+import com.equipit.equipment.model.Equipment;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.ResponseEntity;

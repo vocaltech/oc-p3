@@ -1,7 +1,10 @@
-package com.equipit.equipment;
+package com.equipit.service;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import com.equipit.equipment.model.Equipment;
+import com.equipit.equipment.repository.EquipmentRepository;
 import org.springframework.stereotype.Service;
 
 @Service
