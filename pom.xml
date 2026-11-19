@@ -8,7 +8,7 @@
   </parent>
   <groupId>com.equipit</groupId>
   <artifactId>equipit-api</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <name>EquipIT API</name>
   <properties><java.version>25</java.version></properties>
   <dependencies>
