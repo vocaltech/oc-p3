@@ -2,7 +2,6 @@ package com.equipit.equipment.service;
 
 import com.equipit.equipment.model.Equipment;
 import com.equipit.equipment.repository.EquipmentRepository;
-import com.equipit.service.EquipmentService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

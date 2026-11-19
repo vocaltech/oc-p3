@@ -1,6 +1,6 @@
 package com.equipit.equipment.controller;
 
-import com.equipit.service.EquipmentService;
+import com.equipit.equipment.service.EquipmentService;
 import com.equipit.equipment.dto.BorrowRequest;
 import com.equipit.equipment.model.Equipment;
 import io.swagger.v3.oas.annotations.Operation;
